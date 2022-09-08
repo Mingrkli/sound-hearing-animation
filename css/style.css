@@ -1,0 +1,115 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+}
+
+#container {
+    width: 100%;
+    height: 100%;
+
+    background: black;
+}
+
+/* canvas 
+============================================================================================== */
+#canvas1 {
+    width: 100%;
+    height: 100%;
+    /* filter: blur(5px) contrast(10); */
+}
+
+#user-controls {
+    position: absolute;
+    top: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+
+    width: 100%;
+}
+
+/* canvas selection
+============================================================================================== */
+#canvas-selection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: .5rem;
+    height: 20px;
+    width: 100%;
+}
+
+#canvas-selection a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 1rem;
+    height: 10px;
+    width: 100px;
+
+    color: white;
+    text-decoration: none;
+    background: none;
+    border: 2px solid goldenrod;
+
+    transition: 200ms;
+    cursor: pointer;
+}
+
+#canvas-selection a:hover {
+    background-color: rgba(255, 255, 255, .5);
+}
+
+#canvas-selection a[href='#'] {
+    color: black;
+    background-color: white;
+}
+
+/* Audio
+============================================================================================== */
+#audio1 {
+    height: 30px;
+    width: 80%;
+}
+
+/* choose files
+============================================================================================== */
+#user-controls div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+
+    color: white;
+}
+
+#fileupload {
+    z-index: 100;
+}
+
+@media (max-width: 1300px) {
+    #canvas-selection {
+        flex-direction: column;
+        height: 100%;
+    }
+}
+
+@media (max-width: 700px) {
+    #audio1 {
+        width: 100%;
+    }
+
+    #user-controls div {
+        flex-direction: column;
+    }
+}

@@ -47,31 +47,41 @@ file.addEventListener('change', () => {
         // Copies the current frequency into dataArray
         analyser.getByteFrequencyData(dataArray);
         // Creates 32 sound bars basically
-        drawVisualiser(bufferLength, x, barWidth, barHeight, dataArray);
+        drawVisualiserBars(bufferLength, x, ((canvas.width/2)/bufferLength), barHeight, dataArray);
         requestAnimationFrame(animate);
     }
     animate();
 })
 
-function drawVisualiser(bufferLength, x, barWidth, barHeight, dataArray) {
+function drawVisualiserBars(bufferLength, x, barWidth, barHeight, dataArray) {
     for (let i = 0; i < bufferLength; i++) {
         barHeight = dataArray[i] * 1.5; // bar Height
-        ctx.save();
-        ctx.translate(canvas.width/2, canvas.height/2); // Center
-        ctx.rotate(i + Math.PI * 2/ bufferLength);
+
+        // Colors
+        const hue = i / 2;
+        ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
+        
+        ctx.beginPath();
+        ctx.arc(canvas.width/2 - x, canvas.height - (barHeight - (barWidth)), barWidth, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.fill();
+
+        // ctx.fillRect(canvas.width/2 - x, canvas.height - barHeight, barWidth, barHeight);
+        x += barWidth;
+    }
+    for (let i = 0; i < bufferLength; i++) {
+        barHeight = dataArray[i] * 2; // bar Height
 
         // Colors
         const hue = i / 2;
         ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
 
-        ctx.fillRect(0, 0, barWidth / 50, barHeight * 2); // Bars
-
         ctx.beginPath();
-        ctx.arc(0, barHeight * 2, barHeight / 50, 0, Math.PI * 2);
+        ctx.arc(x, canvas.height - (barHeight - (barWidth)), barWidth, 0, Math.PI * 2);
         ctx.closePath();
         ctx.fill();
-
+        
+        // ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
         x += barWidth;
-        ctx.restore();
     }
 }

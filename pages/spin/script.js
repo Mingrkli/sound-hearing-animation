@@ -53,25 +53,28 @@ file.addEventListener('change', () => {
     animate();
 })
 
+let spin = 0;
 function drawVisualiser(bufferLength, x, barWidth, barHeight, dataArray) {
     for (let i = 0; i < bufferLength; i++) {
-        barHeight = dataArray[i] * 1.5; // bar Height
+        barHeight = dataArray[i] *  2.5; // bar Height
+
         ctx.save();
         ctx.translate(canvas.width/2, canvas.height/2); // Center
-        ctx.rotate(i + Math.PI * 2/ bufferLength);
+        ctx.rotate(i * 4.184);
+        ctx.rotate(spin);
 
         // Colors
-        const hue = i / 2;
+        const hue = barHeight * 2;
         ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
 
-        ctx.fillRect(0, 0, barWidth / 50, barHeight * 2); // Bars
-
         ctx.beginPath();
-        ctx.arc(0, barHeight * 2, barHeight / 50, 0, Math.PI * 2);
-        ctx.closePath();
+        ctx.arc(0, barHeight/2, barHeight/2, 0, Math.PI / 4);
         ctx.fill();
+        ctx.stroke();
+        
+        ctx.restore();
 
         x += barWidth;
-        ctx.restore();
+        spin += 1;
     }
 }
