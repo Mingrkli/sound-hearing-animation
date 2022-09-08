@@ -2,6 +2,7 @@ const container = document.getElementById('container');
 const canvas = document.getElementById('canvas1');
 const file = document.getElementById('fileupload');
 const imgFile = document.getElementById('imageUpload');
+const fileInputs = document.querySelectorAll('#file-inputs *');
 const ctx = canvas.getContext('2d');
 let sprite;
 canvas.width = window.innerWidth;
@@ -20,7 +21,7 @@ window.addEventListener('resize', () => {
 
 // Plays music when user choose a file
 file.addEventListener('change', () => {
-    const audioContext = new window.AudioContext();
+    let audioContext = new window.AudioContext();
     
     const audio1 = document.getElementById('audio1');
     // Changes the audio into a line of text and set it as the audio1 source
@@ -39,9 +40,9 @@ file.addEventListener('change', () => {
     // 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, and 32768. Defaults to 2048
     analyser.fftSize = 128; // Audio sample or more bars
     // bufferLength is half of fftSize and is the number of bars
-    const bufferLength = analyser.frequencyBinCount;
+    let bufferLength = analyser.frequencyBinCount;
     // convert bufferLength to a format which we need
-    const dataArray = new Uint8Array(bufferLength);
+    let dataArray = new Uint8Array(bufferLength);
 
     const barWidth = 15;
     let barHeight;
@@ -61,12 +62,23 @@ file.addEventListener('change', () => {
 
 // converts img files into readable for code
 imgFile.addEventListener('change', () => {
-    const image1 = URL.createObjectURL(imgFile.files[0]);
+    let image1 = URL.createObjectURL(imgFile.files[0]);
     sprite = new Image();
     sprite.src = image1;
+
+    fileInputs.forEach( e => {
+        e.removeAttribute('data-hidden');
+    })
 })
 
 function drawVisualiser(bufferLength, x, barWidth, barHeight, dataArray) {
+    // converts img files into readable for code
+    imgFile.addEventListener('change', () => {
+        const image1 = URL.createObjectURL(imgFile.files[0]);
+        sprite = new Image();
+        sprite.src = image1;
+    })
+
     for (let i = 0; i < bufferLength; i++) {
         barHeight = dataArray[i] *  1.5; // bar Height
 

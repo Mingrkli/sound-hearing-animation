@@ -113,3 +113,9 @@ body {
         flex-direction: column;
     }
 }
+
+/* file inputs
+============================================================================================== */
+#file-inputs > *[data-hidden] {
+    display: none;
+}
